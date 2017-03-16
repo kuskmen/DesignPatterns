@@ -1,6 +1,9 @@
 ﻿namespace Singleton
 {
-    /**
+    using System;
+    using System.Threading;
+    
+     /**
      * 
      *  Following classes implement Standart Singleton pattern.
      *  
@@ -70,6 +73,61 @@
                         {
                             _instance = new UpdatedSingleton();
                         }
+                    }
+                }
+                return _instance;
+            }
+        }
+
+        /**
+         * 
+         *  Some things that were interesting while I was 
+         *  learning singleton design pattern implementation.
+         *  
+         *  If you are developing device oriented architecture and against CLI specifications
+         *  as well as hardware you might consider taking different implementation of Instance property  
+         * 
+         **/
+
+        public static UpdatedSingleton Instance3
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    lock (InstanceLock)
+                    {
+                        // What may happen here is that when * _instance * is accessed concurrently,
+                        // this is because * _instance * might be accessed un-initialized because of a race condition.
+                        // In order for us to fix this we need to add memory barrier.
+                        _instance = new UpdatedSingleton();
+                        Thread.MemoryBarrier();
+
+                        // however full fence memory barrier such as * Thread.MemoryBarrier() * is expensive performancewise
+                        // this will be somehow optimized by using lazy load instantiation with * Interlocked API * in the next Instance 
+                        // property
+                    }
+                }
+                return _instance;
+            }
+        }
+
+        public static UpdatedSingleton Instance4
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    UpdatedSingleton newInstance = new UpdatedSingleton();
+
+                    // Interlocked API is atomic and implemented using memory barriers thus
+                    // achieving best performance while locks are slower given the fact that they 
+                    // require kernel mode transition
+
+                    if (Interlocked.CompareExchange(ref _instance, newInstance, null) != null &&
+                        newInstance is IDisposable)
+                    {
+                        ((IDisposable)newInstance).Dispose();
                     }
                 }
                 return _instance;

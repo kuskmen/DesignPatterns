@@ -43,9 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HardcoreSingleton.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StandartSingleton.cs" />
+    <Compile Include="UpdatedSingleton.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
