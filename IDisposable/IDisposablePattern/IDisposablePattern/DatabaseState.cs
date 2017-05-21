@@ -12,10 +12,7 @@
     //  purposes. ( Having to close and open MySQL connection each time is relatively expensive so we want to keep the connection open
     //  and re-use it for later ). Whats the problem with this? Well if we are running our application on multiple instances 
     //  concurrently we might overflow the connection pool set to our SQL Server and this makes our application not scalable.
-    //
-    // 3. Luckily our class implements IDisposable pattern so drawback from point 2, shouldnt be a problem if it is used CORRECTLY.
-    // (in using statement for instance!!!)
-    //
+    //  But this class implements IDisposable so we are closing the connection.
     public class DatabaseState : IDisposable
     {
         private SqlConnection _connection;
@@ -25,7 +22,7 @@
             if (this._connection == null)
             {
                 // Dummy operations
-                _connection = new SqlConnection();
+                _connection = new SqlConnection("Server=.\\SQLEXPRESS;Database=master;Integrated Security=SSPI;App=IDisposablePattern");
                 _connection.Open();
             }
             using (var command = _connection.CreateCommand())

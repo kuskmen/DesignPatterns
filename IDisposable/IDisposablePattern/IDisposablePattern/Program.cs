@@ -1,4 +1,6 @@
-﻿namespace IDisposablePattern
+﻿using System;
+
+namespace IDisposablePattern
 {
     class Program
     {
@@ -9,7 +11,7 @@
             // which executes virtual method Dispose() to the object created in using.
             using (var connection = new DatabaseState())
             {
-                connection.GetDate();
+                Console.WriteLine(connection.GetDate());
             }
         }
     }
