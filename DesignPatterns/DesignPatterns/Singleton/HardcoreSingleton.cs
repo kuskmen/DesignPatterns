@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Singleton
+namespace DesignPatterns.Singleton
 {
     /**
     * 
@@ -28,7 +28,7 @@ namespace Singleton
         {
             if (Instance != null)
             {
-                throw new Exception($"Please do not create new " +
+                throw new Exception("Please do not create new " +
                                     $"instances of singleton class {this.GetType().Name} via reflection");
             }
         }
@@ -39,7 +39,8 @@ namespace Singleton
         {
             static InstanceHolder() { }
 
-            internal static HardcoreSingleton instance = new HardcoreSingleton();
+            // ReSharper disable once InconsistentNaming
+            internal static readonly HardcoreSingleton instance = new HardcoreSingleton();
         }
 
         /// <summary>

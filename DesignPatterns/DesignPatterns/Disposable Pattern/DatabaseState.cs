@@ -1,8 +1,8 @@
-﻿namespace IDisposablePattern
-{
-    using System;
-    using System.Data.SqlClient;
+﻿using System;
+using System.Data;
 
+namespace DesignPatterns.Disposable_Pattern
+{
     // Couple of things to notice here.
     // 
     // 1. We are creating type that holds instance of a type that implements IDisposable interface 
@@ -15,7 +15,7 @@
     //  But this class implements IDisposable so we are closing the connection.
     public class DatabaseState : IDisposable
     {
-        private SqlConnection _connection;
+        private IDbConnection _connection;
 
         public string GetDate()
         {

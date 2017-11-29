@@ -1,9 +1,9 @@
-﻿namespace Singleton
+﻿using System;
+using System.Threading;
+
+namespace DesignPatterns.Singleton
 {
-    using System;
-    using System.Threading;
-    
-     /**
+    /**
      * 
      *  Following classes implement Standart Singleton pattern.
      *  

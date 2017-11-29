@@ -1,13 +1,14 @@
-﻿namespace IDisposablePattern
-{
-    using System;
-    using System.Data.SqlClient;
-    using System.Runtime.InteropServices;
+﻿using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Runtime.InteropServices;
 
+namespace DesignPatterns.Disposable_Pattern
+{
     public class DatabaseStateImpr : IDisposable
     {
         // managed resources
-        private SqlConnection _connection;
+        private IDbConnection _connection;
         private bool _disposed;
 
         // unmanaged resources
