@@ -18,7 +18,7 @@ namespace DesignPatterns.Object_Pool_Pattern
             _items = new T[size - 1];
         }
 
-        public T Allocate()
+        public virtual T Allocate()
         {
             // Try to get first object first.
             var inst = _firstItem;
@@ -41,8 +41,7 @@ namespace DesignPatterns.Object_Pool_Pattern
             // return instance of the first object (this is not null for sure).
             return inst;
         }
-
-        public void Free(T obj)
+        public virtual void Free(T obj)
         {
             Debug.Assert(obj != null);
             Debug.Assert(obj != _firstItem);
