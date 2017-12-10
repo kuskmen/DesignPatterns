@@ -11,7 +11,7 @@ namespace DesignPatterns.Disposable_Pattern
     // 
     // 2. Notice how we are using this type but we are not closing the connection anywhere, this can be done for optimization
     //  purposes. ( Having to close and open MySQL connection each time is relatively expensive so we want to keep the connection open
-    //  and re-use it for later ). Whats the problem with this? Well if we are running our application on multiple instances 
+    //  and re-use it for later ) - Check Object pool pattern. Whats the problem with this? Well if we are running our application on multiple instances 
     //  concurrently we might overflow the connection pool set to our SQL Server and this makes our application not scalable.
     //  But this class implements IDisposable so we are closing the connection.
     public class DatabaseState : IDisposable
