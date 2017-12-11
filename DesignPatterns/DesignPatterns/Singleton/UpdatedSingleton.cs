@@ -4,17 +4,17 @@ using System.Threading;
 namespace DesignPatterns.Singleton
 {
     /**
-     * 
+     *
      *  Following classes implement Standart Singleton pattern.
-     *  
-     *  Benefits: 
-     *            - This implementation incapsulates creation of the instance within the class 
+     *
+     *  Benefits:
+     *            - This implementation incapsulates creation of the instance within the class
      *              and holding that instance throughout the application lifespan.
      *            - This fixes the multithreading issues that standart singleton pattern introduce.
-     * 
-     *  Issues: 
+     *
+     *  Issues:
      *            - Instances can still be created by: cloning, reflection, sub-classing singleton class.
-     * 
+     *
      **/
 
     public class UpdatedSingleton
@@ -37,7 +37,7 @@ namespace DesignPatterns.Singleton
         /// <summary>
         ///     Static method that provides sort of lazy instantiating of our class instance creation
         ///     and providing multithreaded safe inizialization.
-        /// 
+        ///
         ///     Notice that this is slow because only one thread can access <see cref="Instance" /> at a time.
         ///     This is fixed in <see cref="Instance2"/>
         /// </summary>
@@ -52,7 +52,7 @@ namespace DesignPatterns.Singleton
                 }
             }
         }
-        
+
         /// <summary>
         ///     Updated version of <see cref="Instance"/> method.
         /// </summary>
@@ -80,13 +80,13 @@ namespace DesignPatterns.Singleton
         }
 
         /**
-         * 
-         *  Some things that were interesting while I was 
+         *
+         *  Some things that were interesting while I was
          *  learning singleton design pattern implementation.
-         *  
+         *
          *  If you are developing device oriented architecture and against CLI specifications
-         *  as well as hardware you might consider taking different implementation of Instance property  
-         * 
+         *  as well as hardware you might consider taking different implementation of Instance property
+         *
          **/
 
         public static UpdatedSingleton Instance3
@@ -104,7 +104,7 @@ namespace DesignPatterns.Singleton
                         Thread.MemoryBarrier();
 
                         // however full fence memory barrier such as * Thread.MemoryBarrier() * is expensive performancewise
-                        // this will be somehow optimized by using lazy load instantiation with * Interlocked API * in the next Instance 
+                        // this will be somehow optimized by using lazy load instantiation with * Interlocked API * in the next Instance
                         // property
                     }
                 }
@@ -121,7 +121,7 @@ namespace DesignPatterns.Singleton
                     UpdatedSingleton newInstance = new UpdatedSingleton();
 
                     // Interlocked API is atomic and implemented using memory barriers thus
-                    // achieving best performance while locks are slower given the fact that they 
+                    // achieving best performance while locks are slower given the fact that they
                     // require kernel mode transition
 
                     if (Interlocked.CompareExchange(ref _instance, newInstance, null) != null &&
@@ -136,10 +136,10 @@ namespace DesignPatterns.Singleton
     }
 
     /**
-     * 
-     *  Same thing can be achieved far more simpler but at the cost of 
+     *
+     *  Same thing can be achieved far more simpler but at the cost of
      *  laziness and slight performence drawback in some cases.
-     * 
+     *
      **/
 
     public class UpdatedSingletonv2
@@ -152,26 +152,27 @@ namespace DesignPatterns.Singleton
         static UpdatedSingletonv2() { }
 
         private UpdatedSingletonv2() { }
+
         /// <summary>
         ///     Static field holding the instance of the class.
         /// </summary>
-        /// <remarks> 
-        ///     Because this class has static constructor, it is specified as having a relaxed semantic 
-        ///     for its type-initializer method(this is called beforefieldinit). What this means is 
+        /// <remarks>
+        ///     Because this class has static constructor, it is specified as having a relaxed semantic
+        ///     for its type-initializer method(this is called beforefieldinit). What this means is
         ///     that this method will be invoked immediately prior to executing that static constructor.
-        ///     
-        ///     Note how if we have multiple(or lets say a lot) static field initializers this 
+        ///
+        ///     Note how if we have multiple(or lets say a lot) static field initializers this
         ///     may lead to performance drawback.
         /// </remarks>
         public static UpdatedSingletonv2 Instance { get; } = _instance;
 
     }
-    
+
     /**
-      * 
+      *
       *  We can easily workaround this potential performance drawback and
       *  improve laziness with nested type.
-      * 
+      *
       **/
 
     public class UpdatedSingletonv3
@@ -190,7 +191,7 @@ namespace DesignPatterns.Singleton
         /// </summary>
         /// <remarks>
         ///     Old pattern of marking type not to be beforefieldinit is used here in order to
-        ///     eliminate performance drawbacks because this nested type will hold only one 
+        ///     eliminate performance drawbacks because this nested type will hold only one
         ///     static field initializer because of its purpose.
         /// </remarks>
         private static class InstanceHolder

@@ -14,16 +14,22 @@ namespace DataStructures
         /// <throws><see cref="ArgumentException"/></throws>
         public static void Swap<T>(this T[] array, int firstIndex, int secondIndex)
         {
+#if DEBUG
+            if (array == null)
+            {
+               throw new ArgumentNullException(nameof(array));
+            }
             if (firstIndex > array.Length || firstIndex < 0 ||
                 secondIndex > array.Length || secondIndex < 0)
             {
                 throw new ArgumentException("One of the indexes is out of range.");
             }
-
+#endif
             var temp = array[firstIndex];
             array[firstIndex] = array[secondIndex];
             array[secondIndex] = temp;
         }
+
         /// <summary>
         ///  Removes element from array at index.
         /// </summary>
@@ -33,6 +39,16 @@ namespace DataStructures
         /// <returns>Returns new array without the element at passed index.</returns>
         public static T[] RemoveAt<T>(this T[] array, int index)
         {
+#if DEBUG
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+            if (index < 0)
+            {
+                throw new ArgumentException(nameof(index));
+            }
+#endif
             var dest = new T[array.Length - 1];
             if (index > 0)
                 Array.Copy(array, 0, dest, 0, index);

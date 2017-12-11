@@ -1,17 +1,17 @@
 ﻿namespace DesignPatterns.Singleton
 {
     /**
-     * 
+     *
      *  Following classes implement Standart Singleton pattern.
-     *  
-     *  Benefits: 
-     *            - This implementation incapsulates creation of the instance within the class 
+     *
+     *  Benefits:
+     *            - This implementation incapsulates creation of the instance within the class
      *              and holding that instance throughout the application lifespan.
-     * 
-     *  Issues: 
+     *
+     *  Issues:
      *            - This current implementation has multithreading issues.
      *            - Instances can still be created by: cloning, reflection, sub-classing singleton class.
-     * 
+     *
      **/
 
     public class StandartSingleton
@@ -37,10 +37,10 @@
     }
 
     /**
-     * 
+     *
      *  Same thing can be achieved with static constructor and
      *  readonly field holding the instance.
-     * 
+     *
      **/
 
     public class StandartSingletonv2

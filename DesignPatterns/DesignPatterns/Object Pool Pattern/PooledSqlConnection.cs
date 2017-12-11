@@ -6,7 +6,7 @@
 
     public class PooledSqlConnection
     {
-        private readonly SqlConnectionPool _pool = 
+        private readonly SqlConnectionPool _pool =
             new SqlConnectionPool(() => new SqlConnection(_connectionString));
         private static string _connectionString;
 

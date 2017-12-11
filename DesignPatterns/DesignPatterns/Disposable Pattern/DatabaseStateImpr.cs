@@ -44,19 +44,19 @@ namespace DesignPatterns.Disposable_Pattern
             // Here in original Dispose method we call protected method with parameter true,
             // saying that this object is being disposed.
             this.Dispose(true);
-            
+
             // Then we "tell" garbage collector to suppress finalizer for this object because we are releasing
             // its memory and doesnt need to be finalized. Calling finalizer(destructor) of a given type is expensive
             // and tweaks like this help us improve performance of the application.
-            
+
             // This is only when your class doesnt have unmanaged resources!!!
             // Since this is just made to be a demo I will leave it there, but this contradicts with our defined finalizer.
             GC.SuppressFinalize(this);
         }
 
-        // Following the best practices we should create another method in the class 
+        // Following the best practices we should create another method in the class
         // with parameter saying wether or not the object is being disposed.
-        // Its really important that this method DOES NOT throw exceptions thus allowing to be called multiple times 
+        // Its really important that this method DOES NOT throw exceptions thus allowing to be called multiple times
         protected virtual void Dispose(bool disposing)
         {
             // another thing we may add is flag that tells us if object is disposed already
@@ -75,7 +75,7 @@ namespace DesignPatterns.Disposable_Pattern
             }
             // Why do we need to do that?
             // If consumer of this class forgets to call its Dispose method ( simply by not using the object in "using" statement
-            // Nevertheless garbage collector will fire eventually and it will invoke Dispose method whats the problem with that is if we didn't 
+            // Nevertheless garbage collector will fire eventually and it will invoke Dispose method whats the problem with that is if we didn't
             // have the following code unmanaged resources wouldnt be disposed , because as we know GC cant release unmanaged code.
             // So thats why we need destructor(finalizer).
             if (_unmanagedResources != IntPtr.Zero)
@@ -88,7 +88,7 @@ namespace DesignPatterns.Disposable_Pattern
 
         ~DatabaseStateImpr()
         {
-            // At this point GC called our finalizer method , meaning 
+            // At this point GC called our finalizer method , meaning
             // that we don't know what state our managed resources are (collected or not) because
             // our consumer may not used our object properly(not in using statement) so thats why
             // we skip unmanaged resources as they may have been finalized themselves and we cant guarantee that we can

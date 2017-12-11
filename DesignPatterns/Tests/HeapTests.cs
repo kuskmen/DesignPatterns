@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Tests
 {
     [TestFixture]
-    public class MaxHeapTests
+    public class HeapTests
     {
 
         [TestCase(new[] { 1 })]
@@ -16,28 +16,49 @@ namespace Tests
             // Arrange
             // Act
             // Assert
-            Assert.IsTrue(IsMaxHeap(new MaxHeap<int>(array)));
+            Assert.IsTrue(IsMaxHeap(new Heap<int>(array, HeapType.Max)));
         }
 
         [TestCase(new[] { 1 }, 1)]
         [TestCase(new[] { 10, 5, 8, 2, 14 }, 14)]
         [TestCase(new[] { 2, 7, 26, 25, 19, 17, 1, 90, 3, 36 }, 90)]
-        public void Extract_ShouldExtractAlwaysMaxElement(int[] array, int maxElement)
+        public void Extract_ShouldExtractAlwaysMaxElementFromMaxHeap(int[] array, int maxElement)
         {
             // Arrange
             // Act
             // Assert
-            Assert.AreEqual(maxElement, new MaxHeap<int>(array).Extract());
+            Assert.AreEqual(maxElement, new Heap<int>(array, HeapType.Max).Extract());
+        }
+
+        [TestCase(new[] { 1 }, 1)]
+        [TestCase(new[] { 10, 5, 8, 2, 14 }, 2)]
+        [TestCase(new[] { 2, 7, 26, 25, 19, 17, 1, 90, 3, 36 }, 1)]
+        public void Extract_ShouldExtractAlwaysMinElementFromMinHeap(int[] array, int maxElement)
+        {
+            // Arrange
+            // Act
+            // Assert
+            Assert.AreEqual(maxElement, new Heap<int>(array, HeapType.Min).Extract());
         }
 
         [TestCase(new[] { 10, 5, 8, 2, 14 }, new[] { 14, 10, 8, 5, 2})]
         [TestCase(new[] { 2, 7, 26, 25, 19, 17, 1, 90, 3, 36 }, new[] { 90, 36, 26, 25, 19, 17, 7, 3, 2, 1})]
-        public void Sort_ShouldReturnSortedInDescOrderArray(int[] heap, int[] sorted)
+        public void Sort_WhenHeapIsMax_ShouldReturnSortedInDescOrderArray(int[] heap, int[] sorted)
         {
             // Arrange
             // Act
             // Assert
-            CollectionAssert.AreEqual(new MaxHeap<int>(heap).Sort(), sorted);
+            CollectionAssert.AreEqual(new Heap<int>(heap, HeapType.Max).Sort(), sorted);
+        }
+
+        [TestCase(new[] { 10, 5, 8, 2, 14 }, new[] { 2, 5, 8, 10, 14 })]
+        [TestCase(new[] { 2, 7, 26, 25, 19, 17, 1, 90, 3, 36 }, new[] { 1, 2, 3, 7, 17, 19, 25, 26, 36, 90 })]
+        public void Sort_WhenHeapIsMin_ShouldReturnSortedInAscOrderArray(int[] heap, int[] sorted)
+        {
+            // Arrange
+            // Act
+            // Assert
+            CollectionAssert.AreEqual(new Heap<int>(heap, HeapType.Min).Sort(), sorted);
         }
 
         /// <summary>
@@ -47,7 +68,7 @@ namespace Tests
         /// <param name="heap"> The heap.</param>
         /// <param name="index"> Index from which to start.</param>
         /// <returns></returns>
-        private static bool IsMaxHeap<T>(MaxHeap<T> heap, int index = 0)
+        private static bool IsMaxHeap<T>(Heap<T> heap, int index = 0)
         {
             // if it is a leaf it is max heap.
             if (index >= (heap.Count - 1)/2)

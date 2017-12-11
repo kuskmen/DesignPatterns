@@ -3,15 +3,15 @@
 namespace DesignPatterns.Singleton
 {
     /**
-    * 
+    *
     *  Following classes implement Standart Singleton pattern.
-    *  
-    *  Benefits: 
-    *            - This implementation incapsulates creation of the instance within the class 
+    *
+    *  Benefits:
+    *            - This implementation incapsulates creation of the instance within the class
     *              and holding that instance throughout the application lifespan.
     *            - This fixes the multithreading issues that standart singleton pattern introduce.
     *            - Instances can't be created by: cloning, reflection, sub-classing singleton class.
-    *  Issues: 
+    *  Issues:
     *            ???
     **/
 
@@ -20,7 +20,7 @@ namespace DesignPatterns.Singleton
     /// </summary>
     public sealed class HardcoreSingleton
     {
-        /// <remarks> 
+        /// <remarks>
         ///     Adding simple check in the private constructor prevents class
         ///     from being instantiated thru reflection.
         /// </remarks>
