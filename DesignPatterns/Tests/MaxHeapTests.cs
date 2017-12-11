@@ -30,6 +30,16 @@ namespace Tests
             Assert.AreEqual(maxElement, new MaxHeap<int>(array).Extract());
         }
 
+        [TestCase(new[] { 10, 5, 8, 2, 14 }, new[] { 14, 10, 8, 5, 2})]
+        [TestCase(new[] { 2, 7, 26, 25, 19, 17, 1, 90, 3, 36 }, new[] { 90, 36, 26, 25, 19, 17, 7, 3, 2, 1})]
+        public void Sort_ShouldReturnSortedInDescOrderArray(int[] heap, int[] sorted)
+        {
+            // Arrange
+            // Act
+            // Assert
+            CollectionAssert.AreEqual(new MaxHeap<int>(heap).Sort(), sorted);
+        }
+
         /// <summary>
         ///  Determines if given array is max heap.
         /// </summary>

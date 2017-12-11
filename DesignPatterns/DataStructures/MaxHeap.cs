@@ -88,6 +88,22 @@
             Heapify(_heap);
             return result;
         }
+        /// <summary>
+        /// Sorts the heap without modifying it.
+        /// </summary>
+        /// <remarks> This has O(nlogn) time complexity. </remarks>
+        /// <returns> Sorted enumerable in descending order.</returns>
+        public IEnumerable<T> Sort()
+        {
+            // TODO: Check if move semantics are available in C#
+            var heap = new MaxHeap<T>(_heap);
+            var result = new T[_heap.Length];
+            for (var i = 0; i < result.Length; i++)
+            {
+                result[i] = heap.Extract();
+            }
+            return result;
+        }
 
         /// <summary>
         ///  Gets the parent index of the <paramref name="index"/>.
