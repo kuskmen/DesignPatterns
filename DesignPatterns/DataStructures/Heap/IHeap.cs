@@ -21,13 +21,6 @@ namespace DataStructures.Heap
         void Add(T element);
 
         /// <summary>
-        ///  Transforms array into heap.
-        /// </summary>
-        /// <param name="array">Array to be transformed.</param>
-        /// <param name="index"> Index of the root of the subtree to heapify. When it is zero this means heapify whole heap.</param>
-        void Heapify(T[] array, int index = 0);
-
-        /// <summary>
         ///  Extracts element from the heap.
         /// </summary>
         /// <returns> Extracted element.</returns>

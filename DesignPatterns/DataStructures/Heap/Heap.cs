@@ -97,12 +97,11 @@
             Heapify(_heap, Count);
         }
 
-        /// <inheritdoc />
         /// <remarks>
         ///  Maintains the heap property with the help of <see cref="_heapPropertyValidator"/> function.
         ///  Takes O(nlogn) time complexity. 
         /// </remarks>
-        public void Heapify(T[] array, int index = 0)
+        private void Heapify(T[] array, int index = 0)
         {
 #if DEBUG
             if (array == null)

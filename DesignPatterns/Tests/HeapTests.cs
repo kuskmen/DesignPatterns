@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using DataStructures;
+using DataStructures.Heap;
 using NUnit.Framework;
 
 namespace Tests
