@@ -1,12 +1,10 @@
 namespace DataStructures.Heap
 {
-    using System.Collections.Generic;
-
     /// <summary>
     ///   Represents heap data structure.
     /// </summary>
     /// <typeparam name="T">Type of the parameters stored in the heap.</typeparam>
-    public interface IHeap<T> : IEnumerable<T>
+    public interface IPriorityQueue<T>
     {
         /// <summary>
         ///  Builds heap out of array.

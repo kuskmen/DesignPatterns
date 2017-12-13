@@ -1,15 +1,14 @@
 ﻿namespace DataStructures.Heap
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
 
     /// <summary>
-    ///  Represents max heap data struture.
+    ///  Represents heap data struture.
     /// </summary>
     /// <typeparam name="T">Type of the elements in the heap.</typeparam>
-    public class Heap<T> : IHeap<T>
+    public class Heap<T> : IPriorityQueue<T>
     {
         private T[] _heap;
         private readonly HeapType _heapType;
@@ -57,29 +56,6 @@
         ///  Gets total number of elements in the heap.
         /// </summary>
         public int Count { get; private set; }
-        public T this[int index]
-        {
-            get
-            {
-#if DEBUG
-                if (index < 0)
-                {
-                    throw new ArgumentException(nameof(index));
-                }
-#endif
-                return _heap[index];
-            }
-            set
-            {
-#if DEBUG
-                if (value == null)
-                {
-                    throw new ArgumentNullException(nameof(value));
-                }
-#endif
-                _heap[index] = value;
-            }
-        }
 
         /// <inheritdoc />
         /// <remarks> Takes O(nlogn) time complexity. </remarks>
@@ -101,7 +77,7 @@
         ///  Maintains the heap property with the help of <see cref="_heapPropertyValidator"/> function.
         ///  Takes O(nlogn) time complexity. 
         /// </remarks>
-        private void Heapify(T[] array, int index = 0)
+        private void Heapify(T[] array, int index)
         {
 #if DEBUG
             if (array == null)
@@ -151,8 +127,7 @@
 
         /// <inheritdoc />
         /// <remarks> 
-        ///  This method extracts top element of the heap. 
-        ///  For max heap this is max element for min heap this is min element.
+        ///  Takes the highest priority element from the heap.
         ///  Time complexity of this method is O(logn).
         /// </remarks>
         public T Extract()
@@ -165,8 +140,8 @@
             _heap[0] = _heap[--Count];
             _heap = _heap.RemoveAt(Count);
 
-            // heapify the heap as we broke the property.
-            Heapify(_heap);
+            // heapify the heap in case we broke the property.
+            Heapify(_heap, 0);
             return result;
         }
 
@@ -191,22 +166,13 @@
         }
 
         /// <summary>
-        ///  Gets the parent index of the <paramref name="index"/>.
-        /// </summary>
-        /// <param name="index">Index to which parent index will be searched for.</param>
-        /// <returns> Parent index. </returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static int Parent(int index)
-            => index % 2 == 0 ? index / 2 - 1 : index / 2;
-
-        /// <summary>
         ///  Gets the index of left child of given index.
         /// </summary>
         /// <param name="index">Index to found left child index to.</param>
         /// <returns> Index of the left child of the element with given index.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int Left(int index)
-            => 2 * index + 1;
+            => (index << 1) + 1;
 
         /// <summary>
         ///  Gets the index of right child of given index.
@@ -215,11 +181,6 @@
         /// <returns> Index of the right child of the element with given index.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int Right(int index)
-            => 2 * index + 2;
-
-        #region IEnumerable
-        public IEnumerator<T> GetEnumerator() => ((IEnumerable<T>)_heap).GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        #endregion
+            => (index << 1) + 2;
     }
 }
