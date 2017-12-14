@@ -11,45 +11,27 @@
     public class Heap<T> : IPriorityQueue<T>
     {
         private T[] _heap;
-        private readonly HeapType _heapType;
+        private readonly int _heapSize;
         
         /// <summary>
         ///  Used to validate property of the heap. Either smallest 
         ///  element should be always root of each tree and sub-tree in a context of min heap
         ///  or largest when dealing with max heap.
         /// </summary>
-        private readonly Func<int, int, T[], bool> _heapPropertyValidator;
+        private readonly Comparison<T> _criteriaValidator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Heap{T}"/> class.
         /// </summary>
-        /// <param name="heap"> Array of type <typeparamref name="T"/></param>
-        /// <param name="heapType"> Determines what kind of heap this instance will be. It can be any tye of <see cref="HeapType"/>.</param>
-        public Heap(T[] heap, HeapType heapType)
+        /// <param name="heapSize"> Determines size of the heap. </param>
+        /// <param name="criteriaValidator">Delegate which will determine if the heap property is according to given criteria. </param>
+        public Heap(int heapSize, Comparison<T> criteriaValidator)
         {
-            _heap = heap;
-            _heapType = heapType; 
-            Count = heap.Length;
+            _heap = new T[heapSize];
+            _heapSize = heapSize;
+            _criteriaValidator = criteriaValidator;
 
-            switch (heapType)
-            {
-                case HeapType.Max:
-                    _heapPropertyValidator =
-                        (comparingIndex, comparingIndex2, array) =>
-                            comparingIndex < Count && Comparer<T>.Default.Compare(array[comparingIndex], array[comparingIndex2]) > 0;
-                    break;
-                case HeapType.Min:
-                    _heapPropertyValidator =
-                        (comparingIndex, comparingIndex2, array) =>
-                            comparingIndex < Count && Comparer<T>.Default.Compare(array[comparingIndex], array[comparingIndex2]) < 0;
-                    break;
-#if DEBUG
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(heapType), heapType, null);
-#endif
-            }
-
-            Build(_heap);
+            Count = 0;
         }
 
         /// <summary>
@@ -57,16 +39,15 @@
         /// </summary>
         public int Count { get; private set; }
 
+        /// <summary>
+        ///   Tells if the heap is empty.
+        /// </summary>
+        public bool Empty => _heapSize > 0;
+
         /// <inheritdoc />
         /// <remarks> Takes O(nlogn) time complexity. </remarks>
         public void Add(T element)
         {
-#if DEBUG
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-#endif
             _heap[Count] = element;
             Count++;
 
@@ -74,8 +55,8 @@
         }
 
         /// <remarks>
-        ///  Maintains the heap property with the help of <see cref="_heapPropertyValidator"/> function.
-        ///  Takes O(nlogn) time complexity. 
+        ///  Maintains the heap property with the help of <see cref="_criteriaValidator"/> comparison delegate.
+        ///  Takes O(logn) time complexity. 
         /// </remarks>
         private void Heapify(T[] array, int index)
         {
@@ -90,12 +71,11 @@
                 var left = Left(index);
                 var right = Right(index);
                 var toSwap = index;
-
-                if(_heapPropertyValidator.Invoke(left, index, array))
+                if(left < Count && _criteriaValidator.Invoke(array[left], array[index]) > 0)
                 {
                     toSwap = left;
                 }
-                if(_heapPropertyValidator.Invoke(right, toSwap, array))
+                if(right < Count && _criteriaValidator.Invoke(array[right],array[toSwap]) < 0)
                 {
                     toSwap = right;
                 }
@@ -109,29 +89,21 @@
             }
         }
 
-        ///<inheritdoc />
-        /// <remarks> Takes O(n) time complexity. </remarks>
-        public void Build(T[] array)
-        {
-#if DEBUG
-            if (array == null)
-            {
-                throw new ArgumentNullException(nameof(array));
-            }
-#endif
-            for (var i = Count / 2; i >= 0; i--)
-            {
-                Heapify(array, i);
-            }
-        }
-
         /// <inheritdoc />
         /// <remarks> 
         ///  Takes the highest priority element from the heap.
         ///  Time complexity of this method is O(logn).
         /// </remarks>
+        /// <exception cref="ArgumentException"> 
+        ///  Throws <see cref="ArgumentException"/> when heap is empty.
+        /// </exception>
         public T Extract()
         {
+            if (_heapSize <= 0)
+            {
+                throw new ArgumentException("Can't extract elements from empty heap.");
+            }
+
             // first element is always max element.
             var result = _heap[0];
 
@@ -144,25 +116,39 @@
             Heapify(_heap, 0);
             return result;
         }
+        
+        /// <summary>
+        ///  Takes the highest priority element from the heap safely.
+        ///  Time complexity of this method is O(logn).
+        /// </summary>
+        /// <param name="element">Highest priority element.</param>
+        /// <returns> If the operation is successfull.</returns>
+        public bool TryExtract(out T element)
+        {
+            if (_heapSize <= 0)
+            {
+                element = default(T);
+                return false;
+            }
+            element = Extract();
+            return true;
+        }
 
         /// <summary>
         ///  Sorts the heap without modifying it.
         /// </summary>
         /// <remarks> 
-        ///  This method will sort the heap in asc(when the heap is of type min) and 
-        ///  desc(when the heap is of type max). This has O(nlogn) time complexity.
+        ///  This method will sort the heap by priority. 
+        ///  This has O(nlogn) time complexity.
         /// </remarks>
         /// <returns> Sorted enumerable in descending order.</returns>
         public IEnumerable<T> Sort()
         {
-            // TODO: Check if move semantics are available in C#
-            var heap = new Heap<T>(_heap, _heapType);
-            var result = new T[Count];
-            for (var i = 0; i < result.Length; i++)
+            var heap = this;
+            while(heap.TryExtract(out var element))
             {
-                result[i] = heap.Extract();
+               yield return element;
             }
-            return result;
         }
 
         /// <summary>

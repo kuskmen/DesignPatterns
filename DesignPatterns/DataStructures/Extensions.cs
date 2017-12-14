@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace DataStructures
+﻿namespace DataStructures
 {
+    using System;
+
     public static class Extensions
     {
         /// <summary>
@@ -22,7 +22,7 @@ namespace DataStructures
             if (firstIndex > array.Length || firstIndex < 0 ||
                 secondIndex > array.Length || secondIndex < 0)
             {
-                throw new ArgumentException("One of the indexes is out of range.");
+                throw new IndexOutOfRangeException("One of the indexes is out of range.");
             }
 #endif
             var temp = array[firstIndex];
@@ -44,19 +44,16 @@ namespace DataStructures
             {
                 throw new ArgumentNullException(nameof(array));
             }
-            if (index < 0)
+            if (index < 0 || index > array.Length)
             {
-                throw new ArgumentException(nameof(index));
+                throw new IndexOutOfRangeException(nameof(index));
             }
 #endif
-            var dest = new T[array.Length - 1];
-            if (index > 0)
-                Array.Copy(array, 0, dest, 0, index);
+            if (index < array.Length)
+                Array.Copy(array, index + 1, array, index, array.Length - index);
 
-            if (index < array.Length - 1)
-                Array.Copy(array, index + 1, dest, index, array.Length - index - 1);
-
-            return dest;
+            array[array.Length] = default(T);
+            return array;
         }
     }
 }
