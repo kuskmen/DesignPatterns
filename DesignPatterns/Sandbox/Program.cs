@@ -11,7 +11,12 @@ namespace Sandbox
         {
             var arr = new[] { 2, 7, 26, 25, 19, 17, 1, 90, 3, 36 };
 
-            var heap = new Heap<int>(arr, HeapType.Max).Sort();
+            var heap = new MaxHeap<int>(arr.Length, (i, i1) => i > i1 ? 1 : i == i1 ? 0 : -1);
+
+            foreach (var number in arr)
+            {
+                heap.Add(number);
+            }
         }
     }
 }

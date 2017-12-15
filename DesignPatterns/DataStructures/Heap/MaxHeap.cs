@@ -8,7 +8,7 @@
     ///  Represents heap data struture.
     /// </summary>
     /// <typeparam name="T">Type of the elements in the heap.</typeparam>
-    public class Heap<T> : IPriorityQueue<T>
+    public class MaxHeap<T> : IPriorityQueue<T>
     {
         private T[] _heap;
         private readonly int _heapSize;
@@ -21,11 +21,11 @@
         private readonly Comparison<T> _criteriaValidator;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Heap{T}"/> class.
+        /// Initializes a new instance of the <see cref="MaxMaxHeap{T}"/> class.
         /// </summary>
         /// <param name="heapSize"> Determines size of the heap. </param>
         /// <param name="criteriaValidator">Delegate which will determine if the heap property is according to given criteria. </param>
-        public Heap(int heapSize, Comparison<T> criteriaValidator)
+        public MaxHeap(int heapSize, Comparison<T> criteriaValidator)
         {
             _heap = new T[heapSize];
             _heapSize = heapSize;
@@ -132,23 +132,6 @@
             }
             element = Extract();
             return true;
-        }
-
-        /// <summary>
-        ///  Sorts the heap without modifying it.
-        /// </summary>
-        /// <remarks> 
-        ///  This method will sort the heap by priority. 
-        ///  This has O(nlogn) time complexity.
-        /// </remarks>
-        /// <returns> Sorted enumerable in descending order.</returns>
-        public IEnumerable<T> Sort()
-        {
-            var heap = this;
-            while(heap.TryExtract(out var element))
-            {
-               yield return element;
-            }
         }
 
         /// <summary>
