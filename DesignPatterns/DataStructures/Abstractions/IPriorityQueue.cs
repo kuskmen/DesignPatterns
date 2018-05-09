@@ -1,4 +1,4 @@
-namespace DataStructures.Heap
+﻿namespace DataStructures.Abstractions
 {
     /// <summary>
     ///   Represents priority queue data structure.
@@ -14,7 +14,7 @@ namespace DataStructures.Heap
         /// <summary>
         ///  Tells if the priority queue is empty or not.
         /// </summary>
-        bool Empty { get; }
+        bool IsEmpty { get; }
 
         /// <summary>
         ///  Adds element to the priority queue.

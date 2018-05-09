@@ -1,6 +1,6 @@
-using System;
-using System.Collections.Generic;
-using DataStructures.Heap;
+﻿using System;
+using System.Linq;
+using DataStructures.Implementations;
 using NUnit.Framework;
 
 namespace Tests
@@ -10,13 +10,14 @@ namespace Tests
     {
         private readonly Comparison<int> _intMaxComparer = (first, second) => first > second ? 1 : first < second ? -1 : 0;
 
+        [Ignore("Ignored until properly developed.")]
         [TestCase(new[] { 1 })]
         [TestCase(new[] { 10, 5, 8, 2, 14 })]
         [TestCase(new[] { 2, 7, 26, 25, 19, 17, 1, 90, 3, 36 })]
         public void Build_ShouldBuildCorrectMaxHeap(int[] array)
         {
             // Arrange
-            var heap = new MaxHeap<int>(array.Length, _intMaxComparer);
+            var heap = new MaxHeap<int>(array, _intMaxComparer);
             foreach (var element in array)
             {
                 heap.Add(element);
@@ -28,29 +29,26 @@ namespace Tests
             // Assert.IsTrue(IsMaxHeap(heap));
         }
 
-        [TestCase(new[] { 1 }, 1)]
-        [TestCase(new[] { 10, 5, 8, 2, 14 }, 14)]
-        [TestCase(new[] { 2, 7, 26, 25, 19, 17, 1, 90, 3, 36 }, 90)]
-        public void Extract_ShouldExtractAlwaysMaxElementFromMaxHeap(int[] array, int maxElement)
+        //[TestCase(new[] { 1 })]
+        [TestCase(new[] { 10, 5, 8, 2, 14 })]
+        [TestCase(new[] { 2, 7, 26, 25, 19, 17, 1, 90, 3, 36 })]
+        public void Extract_ShouldExtractAlwaysMaxElementFromMaxHeap(int[] array)
         {
             // Arrange
-            var heap = new MaxHeap<int>(array.Length, _intMaxComparer);
-            foreach (var element in array)
-            {
-                heap.Add(element);
-            }
+            var heap = new MaxHeap<int>(array, _intMaxComparer);
 
             // Act
             // Assert
-            Assert.AreEqual(maxElement, heap.Extract());
+            Assert.AreEqual(array.Max(), heap.Extract());
         }
 
+        [Test]
         public void Extract_ShouldThrowExceptionWhenExtractingFromEmptyHeap()
         {
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => new MaxHeap<int>(0, _intMaxComparer).Extract());
+            Assert.Throws<ArgumentException>(() => new MaxHeap<int>(new int[0], _intMaxComparer).Extract());
         }
 
         [TestCase(new[] { 1 })]
@@ -58,35 +56,25 @@ namespace Tests
         public void Add_ShouldAddSuccessfullyElementsInTheHeap(int[] array)
         {
             // Arrange
-            var heap = new MaxHeap<int>(array.Length, _intMaxComparer);
-            foreach (var element in array)
-            {
-                heap.Add(element);
-            }
+            var heap = new MaxHeap<int>(array, _intMaxComparer);
 
             // Act
+            // Assert
             Assert.AreEqual(array.Length, heap.Count);
         }
 
-        /// <summary>
-        ///  Determines if given array is max maxHeap.
-        /// </summary>
-        /// <typeparam name="T">Type of the elements contained in the maxHeap.</typeparam>
-        /// <param name="maxHeap"> The maxHeap.</param>
-        /// <param name="index"> Index from which to start.</param>
-        /// <returns>Whether the heap is max heap or not.</returns>
-        //private static bool IsMaxHeap<T>(MaxHeap<T> maxHeap, int index = 0)
-        //{
-        //    // if it is a leaf it is max maxHeap.
-        //    if (index >= (maxHeap.Count - 1) / 2)
-        //    {
-        //        return true;
-        //    }
+        [TestCase(new[] {3, 2, 1})]
+        public void GetMax_ShouldReturnHighestElementInTheHeapWithoutExtractingIt(int[] array)
+        {
+            // Arrange
+            var heap = new MaxHeap<int>(array, _intMaxComparer);
 
-        //    return Comparer<T>.Default.Compare(maxHeap[index], maxHeap[2 * index + 1]) > 0
-        //           && Comparer<T>.Default.Compare(maxHeap[index], maxHeap[2 * index + 2]) > 0
-        //           && IsMaxHeap(maxHeap, 2 * index + 1)
-        //           && IsMaxHeap(maxHeap, 2 * index + 2);
-        //}
+            // Act
+            var max = heap.GetMax();
+
+            // Assert
+            Assert.AreEqual(max, array.Max());
+            Assert.AreEqual(array.Length, heap.Count);
+        }
     }
 }

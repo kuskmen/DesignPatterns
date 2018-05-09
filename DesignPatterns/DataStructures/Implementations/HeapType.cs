@@ -1,4 +1,4 @@
-namespace DataStructures.Heap
+﻿namespace DataStructures.Implementations
 {
     /// <summary>
     ///  Used to describe what type a heap will be.
