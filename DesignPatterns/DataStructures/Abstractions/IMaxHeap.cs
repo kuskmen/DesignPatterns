@@ -17,5 +17,12 @@
         /// <param name="maxElement"> Highest priority element.</param>
         /// <returns> If the opration is successfull.</returns>
         bool TryGetMax(out T maxElement);
+        
+        /// <summary>
+        ///  Removes item from the heap at position value of <paramref name="index"/>.
+        /// </summary>
+        /// <param name="index"> Index at which position element will be removed. </param>
+        /// <returns> Removed element. </returns>
+        T Remove(int index);
     }
 }

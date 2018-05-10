@@ -1,8 +1,9 @@
 ﻿namespace DataStructures.Implementations
 {
-    using System.Runtime.CompilerServices;
     using System;
+    using System.Runtime.CompilerServices;
     using DataStructures.Abstractions;
+    using DataStructures.Extensions;
 
     /// <summary>
     ///  Represents heap data struture.
@@ -70,44 +71,6 @@
                 _items.Swap(parent, child);
                 child = parent;
                 parent = Parent(parent);
-            }
-        }
-
-        /// <summary>
-        ///  Maintains the heap property with the help of <see cref="_criteriaValidator"/> comparison delegate.
-        ///  Takes O(logn) time complexity.
-        /// </summary>
-        private void Heapify(T[] array, int index)
-        {
-#if DEBUG
-            if (array == null)
-            {
-                throw new ArgumentNullException(nameof(array));
-            }
-#endif
-            var size = array.Length;
-
-            while (index < size)
-            {
-                var leftChild = Left(index);
-                var rightChild = Right(index);
-                var bigger = index;
-
-                if (leftChild < size && _criteriaValidator.Invoke(array[leftChild], array[index]) > 0)
-                {
-                    bigger = leftChild;
-                }
-
-                if (rightChild < size && _criteriaValidator.Invoke(array[rightChild], array[bigger]) > 0)
-                {
-                    bigger = rightChild;
-                }
-
-                if (bigger == index) return;
-
-                array.Swap(bigger, index);
-
-                index = bigger;
             }
         }
 
@@ -182,6 +145,31 @@
             return true;
         }
 
+        /// <inheritdoc />
+        public T Remove(int index)
+        {
+            var element = _items[index];
+            _items = _items.RemoveAt(index);
+            Count--;
+            for (var i = _items.Length / 2; i >= 0; i--)
+            {
+                Heapify(_items, i);
+            }
+            return element;
+        }
+
+        /// <summary>
+        ///  Creates new instance of array of T.
+        /// </summary>
+        /// <returns> Array of T. </returns>
+        public T[] ToArray()
+        {
+            var result = new T[Count];
+            Array.Copy(_items, result, Count);
+
+            return result;
+        }
+
         /// <summary>
         ///  Gets the index of parent of given index.
         /// </summary>
@@ -208,5 +196,43 @@
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int Right(int index)
             => (index << 1) + 2;
+
+        /// <summary>
+        ///  Maintains the heap property with the help of <see cref="_criteriaValidator"/> comparison delegate.
+        ///  Takes O(logn) time complexity.
+        /// </summary>
+        private void Heapify(T[] array, int index)
+        {
+#if DEBUG
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+#endif
+            var size = array.Length;
+
+            while (index < size)
+            {
+                var leftChild = Left(index);
+                var rightChild = Right(index);
+                var bigger = index;
+
+                if (leftChild < size && _criteriaValidator.Invoke(array[leftChild], array[index]) > 0)
+                {
+                    bigger = leftChild;
+                }
+
+                if (rightChild < size && _criteriaValidator.Invoke(array[rightChild], array[bigger]) > 0)
+                {
+                    bigger = rightChild;
+                }
+
+                if (bigger == index) return;
+
+                array.Swap(bigger, index);
+
+                index = bigger;
+            }
+        }
     }
 }
