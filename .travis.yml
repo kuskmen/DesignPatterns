@@ -5,4 +5,4 @@ install:
     - nuget restore DesignPatterns.sln
 script:
     - msbuild /p:Configuration=Release DesignPatterns.sln
-    - mono ./testrunner/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./Tests/bin/Release/netcoreapp2.0/Tests.dll
+    - mono ./testrunner/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./Tests/bin/Release/net462/Tests.dll
