@@ -1,8 +1,8 @@
 language: csharp
 solution: DesignPatterns.sln
 install:
-    - nuget install NUnit.Runners -Version 3.8.0 -OutputDirectory testrunner
+    - nuget install NUnit.ConsoleRunner -OutputDirectory testrunner
     - nuget restore DesignPatterns.sln
 script:
     - msbuild /p:Configuration=Release DesignPatterns.sln
-    - mono ./testrunner/NUnit.Runners.3.8.0/tools/nunit-console.exe ./Tests/bin/Release/Tests.dll
+    - mono ./testrunner/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./Tests/bin/Release/netcoreapp2.0/Tests.dll
