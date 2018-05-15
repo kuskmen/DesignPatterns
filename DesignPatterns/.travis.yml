@@ -1,0 +1,7 @@
+language: csharp
+solution: DesignPatterns.sln
+install:
+    - nuget install NUnit.Runners -Version 3.8.0 -OutputDirectory testrunner
+script:
+    - xbuild /p:COnfiguration=Release DesignPatterns.sln
+    - mono ./testrunner/NUnit.Runners.3.8.0/tools/nunit-console.exe ./Tests/bin/Release/Tests.dll
