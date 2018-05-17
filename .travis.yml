@@ -8,6 +8,6 @@ install:
 script:
     - msbuild /p:Configuration=Release DesignPatterns.sln
     - mono ./testutils/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./Tests/bin/Release/net462/Tests.dll
-    - ls -R | grep 'opencover'
+    - mono ./testutils/OpenCover*/tools/OpenCover.Console.exe -register:user -target:./scripts/tests.sh -searchdirs:../Tests/bin/Debug/net462 -output:coveragereport.xml
 cache:
     - .nuget/packages
