@@ -1,0 +1,16 @@
+version: 0.0.{build}
+os: Visual Studio 2017
+
+environment:
+  COVERALLS_REPO_TOKEN:
+    secure: 6xbK8TQ8bLqc8EgxbwHAzmnAH1dFwX17+T7jCR66UXtFDOyk1Shat3CFw2RwkThV
+
+install:
+- ps: .\scripts\build.environment.ps1
+- ps: psake .\scripts\tasks.ps1 appveyor-install
+build_script:
+- ps: psake .\scripts\tasks.ps1 appveyor-build
+test_script:
+- ps: psake .\scripts\tasks.ps1 appveyor-test
+
+
