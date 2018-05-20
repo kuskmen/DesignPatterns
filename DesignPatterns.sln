@@ -21,6 +21,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{162813E3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStructures.UnitTests", "tests\DataStructures.UnitTests.csproj", "{7CECA0FD-1195-47C3-9902-EC15A2164C99}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{EF793001-4DC9-470B-A877-ABF0C936A8BC}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\build.environment.ps1 = scripts\build.environment.ps1
+		scripts\tasks.ps1 = scripts\tasks.ps1
+		scripts\tests.sh = scripts\tests.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
