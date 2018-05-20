@@ -6,6 +6,6 @@ install:
     - dotnet restore DesignPatterns.sln
 script:
     - msbuild /p:Configuration=Release DesignPatterns.sln
-    - mono ./testutils/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./Tests/bin/Release/net462/Tests.dll
+    - mono ./testutils/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./tests/bin/Release/net462/*UnitTests.dll
 cache:
     - .nuget/packages

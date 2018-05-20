@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using DataStructures.Implementations;
-using NUnit.Framework;
-
-namespace Tests
+﻿namespace DataStructures.UnitTests
 {
+    using System;
+    using System.Linq;
+    using DataStructures.Implementations;
+    using NUnit.Framework;
+
     [TestFixture]
     public class MaxHeapTests
     {

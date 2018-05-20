@@ -9,13 +9,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStructures", "DataStruc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandbox", "Sandbox\Sandbox.csproj", "{1CCE87E8-A9D1-4951-BA8E-8BD29CE50674}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{17074F25-FC80-4960-ACB5-82F33E8AB439}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{AF1C977F-BDC1-494B-8565-4D57DEE4693F}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.gitignore = .gitignore
 		.travis.yml = .travis.yml
+		appveyor.yml = appveyor.yml
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{162813E3-1F32-4841-97D2-EFA4F74D0284}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStructures.UnitTests", "tests\DataStructures.UnitTests.csproj", "{7CECA0FD-1195-47C3-9902-EC15A2164C99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,13 +39,16 @@ Global
 		{1CCE87E8-A9D1-4951-BA8E-8BD29CE50674}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CCE87E8-A9D1-4951-BA8E-8BD29CE50674}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CCE87E8-A9D1-4951-BA8E-8BD29CE50674}.Release|Any CPU.Build.0 = Release|Any CPU
-		{17074F25-FC80-4960-ACB5-82F33E8AB439}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17074F25-FC80-4960-ACB5-82F33E8AB439}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{17074F25-FC80-4960-ACB5-82F33E8AB439}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{17074F25-FC80-4960-ACB5-82F33E8AB439}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CECA0FD-1195-47C3-9902-EC15A2164C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CECA0FD-1195-47C3-9902-EC15A2164C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CECA0FD-1195-47C3-9902-EC15A2164C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CECA0FD-1195-47C3-9902-EC15A2164C99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7CECA0FD-1195-47C3-9902-EC15A2164C99} = {162813E3-1F32-4841-97D2-EFA4F74D0284}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA241025-4100-4D8C-BE7D-8CFA63329BB0}
