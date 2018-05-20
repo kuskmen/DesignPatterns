@@ -5,7 +5,7 @@ install:
     - nuget install NUnit.ConsoleRunner -OutputDirectory testutils
     - dotnet restore DesignPatterns.sln
 script:
-    - msbuild /p:Configuration=Release DesignPatterns.sln
+    - dotnet build -c Release DesignPatterns.sln
     - mono ./testutils/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./tests/bin/Release/net462/*UnitTests.dll
 cache:
     - .nuget/packages
