@@ -24,7 +24,7 @@
 
             // Act
             // Assert
-            Assert.IsTrue(IsMaxHeap(heap.ToArray()));
+            Assert.IsTrue(MaxHeapTestsHelper.IsMaxHeap(heap.ToArray()));
         }
 
         //[TestCase(new[] { 1 })]
@@ -85,10 +85,118 @@
             heap.Remove(5);
 
             // Assert
-            Assert.IsTrue(IsMaxHeap(heap.ToArray()));
+            Assert.IsTrue(MaxHeapTestsHelper.IsMaxHeap(heap.ToArray()));
         }
 
-        private static bool IsMaxHeap(int[] array)
+        [Test]
+        public void IsEmpty_WhenHeapIsNotEmpty_ShouldReturnFalse()
+        {
+            // Arrange
+            // Act
+            // Assert
+            Assert.IsFalse(new MaxHeap<int>(new []{ 435, 123, 1, 2, 5, 3}, _intMaxComparer).IsEmpty);
+        }
+
+        [Test]
+        public void IsEmpty_WhenHeapIsEmpty_ShouldReturnTrue()
+        {
+            // Arrange
+            // Act
+            // Assert
+            Assert.IsTrue(new MaxHeap<int>(new int[0], _intMaxComparer).IsEmpty);
+        }
+
+        [Test]
+        public void TryExtract_WhenThereAreItemsInTheHeap_ShouldExtractTheItemAndReturnTrue()
+        {
+            // Arrange
+            var array = new [] { 1, 2, 3 };
+            var heap = new MaxHeap<int>(array, _intMaxComparer);
+
+            // Act
+            var success = heap.TryExtract(out var maxElement);
+            
+            // Assert
+            Assert.IsTrue(success);
+            Assert.AreEqual(array.Max(), maxElement);
+        }
+
+        [Test]
+        public void TryExtract_WhenThereAreNoItemsInTheHeap_ShouldReturnFalseAndDefaultElement()
+        {
+            // Arrange
+            var array = new int[0];
+            var heap = new MaxHeap<int>(array, _intMaxComparer);
+
+            // Act
+            var success = heap.TryExtract(out var maxElement);
+
+            // Assert
+            Assert.IsFalse(success);
+            Assert.AreEqual(default(int), maxElement);
+        }
+
+        [Test]
+        public void GetMax_WhenHeapIsEmpty_ShouldThrowArgumentException()
+        {
+            // Arrange
+            // Act
+            // Assert
+            Assert.Throws<ArgumentException>(() => new MaxHeap<int>(new int[0], _intMaxComparer).GetMax());
+        }
+
+        [Test]
+        public void GetMax_WhenHeapIsNotEmpty_ShouldReturnMaxButNotRemoveItFromHeap()
+        {
+            // Arrange
+            var array = new [] { 1, 2, 3 };
+            var heap = new MaxHeap<int>(array, _intMaxComparer);
+
+            // Act
+            var actualCount = heap.Count;
+            var max = heap.GetMax();
+
+            // Assert
+            Assert.AreEqual(array.Length, actualCount);
+            Assert.AreEqual(array.Max(), max);
+        }
+
+        [Test]
+        public void TryGetMax_WhenHeapIsEmpty_ShouldReturnDefaultElementAndFalse()
+        {
+            // Arrange
+            var array = new int[0];
+            var heap = new MaxHeap<int>(array, _intMaxComparer);
+
+            // Act
+            var success = heap.TryGetMax(out var maxElement);
+
+            // Assert
+            Assert.IsFalse(success);
+            Assert.AreEqual(default(int), maxElement);
+        }
+
+        [Test]
+        public void TryGetMax_WhenHeapIsNotEmpty_ShouldReturnMaxElementAndTrueAndNotRemoveItFromHeap()
+        {
+            // Arrange
+            var array = new [] {1, 2, 3};
+            var heap = new MaxHeap<int>(array, _intMaxComparer);
+
+            // Act
+            var actualCount = heap.Count;
+            var success = heap.TryGetMax(out var maxElemet);
+
+            // Assert
+            Assert.AreEqual(array.Length, actualCount);
+            Assert.AreEqual(array.Max(), maxElemet);
+            Assert.IsTrue(success);
+        }
+    }
+
+    internal static class MaxHeapTestsHelper
+    {
+        internal static bool IsMaxHeap(int[] array)
         {
             var n = array.Length;
 

@@ -1,8 +1,6 @@
 ﻿namespace DataStructures.Extensions
 {
     using System;
-    using System.Collections.Generic;
-    using DataStructures.Implementations;
 
     public static class ArrayExtensions
     {
@@ -14,6 +12,7 @@
         /// <param name="firstIndex"> Index that will be swaped with index number two.</param>
         /// <param name="secondIndex"> Index that will be swaped with index number one.</param>
         /// <throws><see cref="ArgumentException"/></throws>
+        /// <throws><see cref="ArgumentNullException"/></throws>
         public static void Swap<T>(this T[] array, int firstIndex, int secondIndex)
         {
 #if DEBUG
@@ -39,6 +38,8 @@
         /// <param name="source"> Array to remove item from.</param>
         /// <param name="index"> Index which will be removed.</param>
         /// <returns>Returns new source without the element at passed index.</returns>
+        /// <throws><see cref="ArgumentNullException"/></throws>
+        /// <throws><see cref="IndexOutOfRangeException"/></throws>
         public static T[] RemoveAt<T>(this T[] source, int index)
         {
 #if DEBUG
@@ -63,24 +64,6 @@
         }
 
         /// <summary>
-        ///  Builds max heap out of source of <typeparamref name="T"/> using default comparer when not provided one.
-        ///  This method takes O(logn) time complexity.
-        /// </summary>
-        /// <typeparam name="T"> Type of the elements in the source. </typeparam>
-        /// <param name="array"> Array to build max heap from. </param>
-        /// <param name="comparer"> Comparer used to determine which element has higher priority.</param>
-        /// <returns> <see cref="MaxHeap{T}"/> instance. </returns>
-        public static MaxHeap<T> BuildMaxHeap<T>(this T[] array, Comparer<T> comparer = null)
-        {
-            var criteriaValidator = comparer == null
-                ? (Comparison<T>) ((first, second) => Comparer<T>.Default.Compare(first, second))
-                : comparer.Compare;
-            var heap = new MaxHeap<T>(array, criteriaValidator);
-
-            return heap;
-        }
-
-        /// <summary>
         ///  Resizes an source and initializes extra elements with <paramref name="defaultValue"/>.
         /// </summary>
         /// <typeparam name="T"> Type of the elements in the source. </typeparam>
@@ -88,12 +71,24 @@
         /// <param name="newSize"> New size. </param>
         /// <param name="defaultValue"> Value of the new extra elements. </param>
         /// <returns> Resized <paramref name="array"/> with <paramref name="newSize"/> and default value for extra elements <paramref name="defaultValue"/></returns>
-        public static T[] Resize<T>(this T[] array, int newSize, T defaultValue)
+        /// <throws><see cref="ArgumentNullException"/></throws>
+        /// <throws><see cref="ArgumentException"/></throws>
+        public static T[] Resize<T>(ref T[] array, int newSize, T defaultValue)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
+            if (newSize < 0 || newSize < array.Length)
+            {
+                throw new ArgumentException(nameof(newSize));
+            }
+
             var oldSize = array.Length;
             Array.Resize(ref array, newSize);
 
-            for (int i = oldSize; i <= newSize; i++)
+            for (var i = oldSize; i < newSize; i++)
             {
                 array[i] = defaultValue;
             }
