@@ -192,6 +192,25 @@
             Assert.AreEqual(array.Max(), maxElemet);
             Assert.IsTrue(success);
         }
+
+        [Test]
+        public void InternalDataStructureOfMaxHeap_WhenInputParameterIsChanged_ShouldNotBeCorrupted()
+        {
+            // Arrange
+            var input = new[] { 2, 3 };
+
+            // Act
+            var heap = new MaxHeap<int>(input, _intMaxComparer);
+
+            input[0] = 7;
+            heap.Add(4);
+
+            //By this point heap should have already been heapified meaning that
+            //if internal data was corrupted it should give wrong result
+
+            // Assert
+            Assert.AreEqual(4, heap.GetMax());
+        }
     }
 
     internal static class MaxHeapTestsHelper
