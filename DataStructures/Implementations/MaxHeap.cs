@@ -35,7 +35,7 @@
 
             for (var i = _items.Length / 2; i >= 0; i--)
             {
-                Heapify(_items, i);
+                Heapify(_items, _items.Length, i);
             }
         }
 
@@ -50,6 +50,29 @@
         ///   Tells if the heap is empty.
         /// </summary>
         public bool IsEmpty => Count == 0;
+
+        /// <summary>
+        ///  Sorts array using heapsort.
+        /// </summary>
+        /// <returns> Ascending sorted array of items from the heap. </returns>
+        public T[] Sort()
+        {
+            var arr = new T[_items.Length];
+            Array.Copy(_items, arr, _items.Length);
+
+            for (var i = arr.Length / 2 - 1; i >= 0; i--)
+            {
+                Heapify(arr, arr.Length, i);
+            }
+
+            for (var i = arr.Length - 1; i >= 0; i--)
+            {
+                arr.Swap(0, i);
+                Heapify(arr, i, 0);
+            }
+
+            return arr;
+        }
 
         /// <inheritdoc />
         /// <remarks> Takes O(logn) time complexity. </remarks>
@@ -98,7 +121,7 @@
             _items = _items.RemoveAt(Count);
 
             // heapify the heap in case we broke the property.
-            Heapify(_items, 0);
+            Heapify(_items, _items.Length, 0);
             return result;
         }
         
@@ -153,7 +176,7 @@
             Count--;
             for (var i = _items.Length / 2; i >= 0; i--)
             {
-                Heapify(_items, i);
+                Heapify(_items, _items.Length, i);
             }
             return element;
         }
@@ -201,7 +224,7 @@
         ///  Maintains the heap property with the help of <see cref="_criteriaValidator"/> comparison delegate.
         ///  Takes O(logn) time complexity.
         /// </summary>
-        private void Heapify(T[] array, int index)
+        private void Heapify(T[] array, int size, int index)
         {
 #if DEBUG
             if (array == null)
@@ -209,8 +232,6 @@
                 throw new ArgumentNullException(nameof(array));
             }
 #endif
-            var size = array.Length;
-
             while (index < size)
             {
                 var leftChild = Left(index);
