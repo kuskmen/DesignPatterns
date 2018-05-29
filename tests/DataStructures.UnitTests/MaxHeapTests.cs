@@ -211,6 +211,22 @@
             // Assert
             Assert.AreEqual(4, heap.GetMax());
         }
+
+        [Test]
+        public void Sort_ShouldCopyInternalItemsAndReturnNewSortedAscendingArray()
+        {
+            // Arrange
+            var input = new[] { 9, 8, 6, 7, 4, 5, 1, 2 };
+            var heap = new MaxHeap<int>(input, _intMaxComparer);
+
+            // Act
+            var actualResult = heap.Sort();
+            Array.Sort(input);
+
+            // Assert
+            Assert.IsTrue(MaxHeapTestsHelper.IsMaxHeap(heap.ToArray()));
+            CollectionAssert.AreEqual(input, actualResult);
+        }
     }
 
     internal static class MaxHeapTestsHelper
