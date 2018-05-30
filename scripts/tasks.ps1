@@ -33,7 +33,7 @@ task unit-test {
 	$nunitConsole = (Resolve-Path "..\packages\NUnit.ConsoleRunner.*\tools\nunit3-console.exe").ToString()
     $testsDlls = (Resolve-Path "..\tests\DataStructures.UnitTests\bin\Release\net462\*.UnitTests.dll").ToString() + " " + (Resolve-Path "..\tests\DesignPatterns.UnitTests\bin\Release\net462\*.UnitTests.dll").ToString()
 	$opencover = (Resolve-Path "..\packages\OpenCover*\tools\OpenCover.Console.exe").ToString()
-	exec { & $opencover -register:user -target:$nunitConsole -targetargs:"$testsDlls" -filter:"+[DataStructures*]* +[DesignPatterns]*HardcoreSingleton -[*UnitTests]*" -output:..\coverage.xml }
+	exec { & $opencover -register:user -target:$nunitConsole -targetargs:"$testsDlls" -filter:"+[DataStructures*]* +[DesignPatterns]*HardcoreSingleton +[DesignPatterns]*ObjectPool -[*UnitTests]*" -output:..\coverage.xml }
 }
 
 task coveralls -depends unit-test {
