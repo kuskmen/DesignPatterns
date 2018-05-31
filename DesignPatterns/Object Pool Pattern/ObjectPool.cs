@@ -11,6 +11,7 @@ namespace DesignPatterns.Object_Pool_Pattern
         private readonly T[] _items;
 
         public ObjectPool(Func<T> factory) : this(factory, Environment.ProcessorCount * 2) { }
+
         public ObjectPool(Func<T> factory, int size)
         {
             Debug.Assert(size >= 1);
@@ -41,6 +42,7 @@ namespace DesignPatterns.Object_Pool_Pattern
             // return instance of the first object (this is not null for sure).
             return inst;
         }
+
         public virtual void Free(T obj)
         {
             Debug.Assert(obj != null);
