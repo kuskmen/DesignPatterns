@@ -23,6 +23,13 @@
         void Add(T element);
 
         /// <summary>
+        ///  Removes item from the heap at position value of <paramref name="index"/>.
+        /// </summary>
+        /// <param name="index"> Index at which position element will be removed. </param>
+        /// <returns> Removed element. </returns>
+        T Remove(int index);
+        
+        /// <summary>
         ///  Extracts element from the priority queue.
         /// </summary>
         /// <returns> Extracted element.</returns>
