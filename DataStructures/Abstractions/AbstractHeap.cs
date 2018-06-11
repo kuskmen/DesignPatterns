@@ -1,9 +1,9 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using DataStructures.Extensions;
-
-namespace DataStructures.Abstractions
+﻿namespace DataStructures.Abstractions
 {
+    using System;
+    using System.Runtime.CompilerServices;
+    using DataStructures.Extensions;
+
     public abstract class AbstractHeap<T> : IPriorityQueue<T>
     {
         protected T[] _items;
