@@ -28,7 +28,17 @@
                 Heapify(_items, _items.Length, i);
             }
         }
-        
+
+        protected T GetTop()
+        {
+            if (_items.Length <= 0)
+            {
+                throw new ArgumentException("Can't extract elements from empty heap.");
+            }
+
+            return _items[0];
+        }
+
         /// <inheritdoc />
         /// <summary>
         ///  Gets total number of elements in the heap.
