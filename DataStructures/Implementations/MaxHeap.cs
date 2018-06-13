@@ -16,8 +16,9 @@
         /// </summary>
         /// <param name="array"> Array to create heap from. </param>
         /// <param name="criteriaValidator">Delegate which will determine if the heap property is according to given criteria. </param>
-        public MaxHeap(T[] array, Comparison<T> criteriaValidator) 
-            : base(array, criteriaValidator) { }
+        public MaxHeap(T[] array, Comparison<T> criteriaValidator) : base(array, criteriaValidator)
+        {
+        }
 
         /// <summary>
         ///  Sorts array using heapsort.
@@ -66,15 +67,7 @@
 
         /// <inheritdoc />
         /// <exception cref="T:System.ArgumentException">Throws exception if heap is empty.</exception>
-        public T GetMax()
-        {
-            if (_items.Length <= 0)
-            {
-                throw new ArgumentException("Can't extract elements from empty heap.");
-            }
-
-            return _items[0];
-        }
+        public T GetMax() => GetTop();
 
         /// <inheritdoc />
         public bool TryGetMax(out T maxElement)
