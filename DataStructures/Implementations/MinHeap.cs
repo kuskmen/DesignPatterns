@@ -23,7 +23,7 @@
             minElement = GetMin();
             return true;
         }
-
+        
         public override void Heapify(T[] array, int size, int index)
         {
 #if DEBUG
