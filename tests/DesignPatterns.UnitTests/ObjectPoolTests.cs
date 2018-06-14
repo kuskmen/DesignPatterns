@@ -40,5 +40,22 @@
             Assert.AreSame(firstInstace, sut.Allocate());
         }
 
+        [Test]
+        public void Free_WhenAllocatingMultipleObjects_ShouldFreeObjectsAccordingly()
+        {
+            // Arrange
+            var firstInstance = sut.Allocate();
+            var secondInstance = sut.Allocate();
+
+            // Act
+            // Assert
+            sut.Free(firstInstance);
+            // now first item is already set and waiting for next allocation
+            // so freeing again should put it back to the second cache.(internal array)
+            sut.Free(secondInstance);
+
+            Assert.Pass();
+        }
+
     }
 }
