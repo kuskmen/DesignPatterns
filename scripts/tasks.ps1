@@ -42,9 +42,16 @@ task coveralls -depends unit-test {
 	exec { & $coveralls --opencover $coverageReport -r $env:COVERALLS_REPO_TOKEN }
 }
 
+task report -depends build, unit-test {
+	$reportGenerator = (Resolve-Path "..\packages\reportgenerator\ReportGenerator.exe").ToString()
+	exec { & $reportGenerator -reports:..\coverage.xml -targetdir:.\reports --reporttypes:Html }
+	exec { & Invoke-Item .\reports\index.htm }
+}
+
 task pre-build -depends restore-nuget-packages
 task post-build -depends coveralls
 
 task appveyor-install -depends pre-build
 task appveyor-build -depends build
 task appveyor-test -depends post-build
+task test-coverage -depends report 
