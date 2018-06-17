@@ -1,1 +1,1 @@
-dotnet test ../tests/DataStructures.UnitTests.csproj
+dotnet test ../tests/DesignPatterns.UnitTests.csproj
