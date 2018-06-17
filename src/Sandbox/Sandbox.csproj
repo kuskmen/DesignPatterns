@@ -13,9 +13,4 @@
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DataStructures\DataStructures.csproj" />
-    <ProjectReference Include="..\DesignPatterns\DesignPatterns.csproj" />
-  </ItemGroup>
-
 </Project>
