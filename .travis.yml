@@ -8,5 +8,6 @@ script:
     - msbuild /p:Configuration=Release DesignPatterns.sln
     - mono ./testutils/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./tests/DesignPatterns.UnitTests/bin/Release/net462/*UnitTests.dll
 cache:
+    directories:
     - .nuget/packages
 111
