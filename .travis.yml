@@ -9,4 +9,3 @@ script:
     - mono ./testutils/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./tests/DesignPatterns.UnitTests/bin/Release/net462/*UnitTests.dll
 cache:
     - .nuget/packages
-111
