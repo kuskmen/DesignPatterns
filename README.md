@@ -3,4 +3,4 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/ytaex2odxh1buqpi?svg=true)](https://ci.appveyor.com/project/kuskmen/designpatterns)
 [![Coverage Status](https://coveralls.io/repos/github/kuskmen/DesignPatterns/badge.svg?branch=master)](https://coveralls.io/github/kuskmen/DesignPatterns?branch=master)
 
-All the design patterns / best practices I went tru and hopefully understand in depth.
+All the design patterns / best practices I went through in https://github.com/jwasham/coding-interview-university list and some more.
