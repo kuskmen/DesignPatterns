@@ -19,10 +19,13 @@ namespace DesignPatterns.Singleton
 
     public class UpdatedSingleton
     {
+        // Double-check locking will not work if volatile is not preset
+        // in other words, compiler may make optimizations re-ordering instructions which will leave
+        // multithreaded programs read stale data.
         /// <summary>
         ///     Static variable that holds the instance of the class.
         /// </summary>
-        private static UpdatedSingleton _instance;
+        private static volatile UpdatedSingleton _instance;
 
         /// <summary>
         ///     Static dummy object used for lock semaphore.
