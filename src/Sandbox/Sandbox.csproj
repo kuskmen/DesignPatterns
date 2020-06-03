@@ -13,4 +13,8 @@
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DesignPatterns\DesignPatterns.csproj" />
+  </ItemGroup>
+
 </Project>
